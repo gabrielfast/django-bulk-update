@@ -196,8 +196,10 @@ def bulk_update(objs, meta=None, update_fields=None, exclude_fields=None,
 
         n_pks = len(pks)
         del pks
-
-        dbtable = '"{}"'.format(meta.db_table)
+        
+        dbtable = '{}'.format(meta.db_table)
+        if not dbtable.startswith('"') or not dbtable.endswith('"'):
+            dbtable = '"{}"'.format(dbtable)
 
         in_clause = '"{pk_column}" in ({pks})'.format(
             pk_column=pk_field.column,
